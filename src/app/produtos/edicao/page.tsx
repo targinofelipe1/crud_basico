@@ -6,7 +6,7 @@ export default function Edicao() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const [nome, setNome] = useState('');
-  const [preco, setPreco] = useState('');
+  const [quantidade, setQuantidade] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function Edicao() {
       const produto = produtosSalvos.find((p: any) => p.id === Number(id));
       if (produto) {
         setNome(produto.nome);
-        setPreco(produto.preco);
+        setQuantidade(produto.quantidade);
       }
     }
   }, [id]);
@@ -24,7 +24,7 @@ export default function Edicao() {
     e.preventDefault();
     const produtosSalvos = JSON.parse(localStorage.getItem('produtos') || '[]');
     const produtosAtualizados = produtosSalvos.map((p: any) =>
-      p.id === Number(id) ? { ...p, nome, preco } : p
+      p.id === Number(id) ? { ...p, nome, quantidade: quantidade } : p
     );
     localStorage.setItem('produtos', JSON.stringify(produtosAtualizados));
     router.push('/produtos');
@@ -45,11 +45,11 @@ export default function Edicao() {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium">Preço</label>
+          <label className="block text-sm font-medium">Quantidade</label>
           <input
             type="text"
-            value={preco}
-            onChange={(e) => setPreco(e.target.value)}
+            value={quantidade}
+            onChange={(e) => setQuantidade(e.target.value)}
             className="w-full px-3 py-2 border rounded"
             required
           />
